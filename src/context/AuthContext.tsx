@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
 
             const data = await res.json() as AuthResponse;
 
-            localStorage.setItem("token", data.token);
+            localStorage.setItem("access_token", data.access_token);
 
             setUser(data.user);
 
@@ -41,8 +41,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
 
     const logout = () => {
         localStorage.removeItem("token");
-        
+
         setUser(null);
     }
 
+    return (
+        <AuthContext.Provider value= {{user, login, logout}}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export const useAuth = () : AuthContextType => {
+    const context = useContext(AuthContext);
+
+    if(!context) {
+        throw new Error("useAuth måste användas inom en AuthProvider");
+    }
+
+    return context;
 }
