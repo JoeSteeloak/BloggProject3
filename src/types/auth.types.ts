@@ -18,3 +18,4 @@ export interface AuthContextType {
     login: (credentials: LoginCredentials) => Promise<void>;
     logout: () => void;
 }
+
