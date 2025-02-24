@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import {User, LoginCredentials, AuthResponse, AuthContextType} from "../types/auth.types"
 
 //skapa context
@@ -11,6 +11,8 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
 
     const [user, setUser] = useState<User | null>(null);
+
+    // logga in användare
 
     const login = async (credentials: LoginCredentials) => { 
 
@@ -39,11 +41,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
 
     }
 
+    //logga ut
+
     const logout = () => {
         localStorage.removeItem("token");
 
         setUser(null);
     }
+
+    // validera token
+    const checkToken = async () => {
+        const access_token = localStorage.getItem("access_token");
+
+        if(!access_token) {
+            return;
+        }
+
+        try {
+            const res = await fetch("http://localhost:3000/auth/validate", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + access_token
+                }
+            });
+
+            if(res.ok) {
+                const data = await res.json();
+                setUser(data.user);
+            }
+
+        } catch(error) {
+            localStorage.removeItem("access_token");
+            setUser(null);
+        }
+
+    }
+
+    useEffect(() => {
+        checkToken();
+    }, [])
 
     return (
         <AuthContext.Provider value= {{user, login, logout}}>
