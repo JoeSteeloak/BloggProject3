@@ -89,7 +89,6 @@ const AdminPage = () => {
                         type="text"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        required
                     />
                 </div>
                 <div>
