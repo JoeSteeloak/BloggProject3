@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useBlog } from "../context/BlogContext";
 import { useState, useEffect } from "react";
+import Modal from "../components/Modal"; // Importera Modal-komponenten
 
 const UpdatePostPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -13,6 +14,9 @@ const UpdatePostPage = () => {
         author: "",
         category: "",
     });
+
+    const [showUpdateModal, setShowUpdateModal] = useState(false); // Modal state
+
 
     const post = posts.find((p) => p.id === Number(id));
 
@@ -53,8 +57,9 @@ const UpdatePostPage = () => {
             }
 
             await fetchPosts(); // Uppdatera listan i kontexten
-            alert("Inlägget uppdaterades!");
-            navigate(`/post/${id}`); // Navigera tillbaka till inläggets sida
+            setShowUpdateModal(true); // Visa modal vid lyckad uppdatering
+
+            
         } catch (error: any) {
             setError(error.message);
         }
@@ -108,6 +113,14 @@ const UpdatePostPage = () => {
                     Spara
                 </button>
             </form>
+            <Modal
+                isOpen={showUpdateModal}
+                onClose={() => setShowUpdateModal(false)} 
+                onConfirm={() => navigate(`/post/${id}`)} 
+                title="Uppdatering lyckades"
+                message="Inlägget har uppdaterats!"
+            />
+
         </div>
     );
 };

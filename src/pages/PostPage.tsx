@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useBlog } from "../context/BlogContext";
 import { useState } from "react";
+import Modal from "../components/Modal"; // Importera Modal-komponenten
+
 
 const PostPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -9,6 +11,14 @@ const PostPage = () => {
     const [error, setError] = useState("");
 
     const post = posts.find((p) => p.id === Number(id));
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false); // Modal state
+    const [postToDelete, setPostToDelete] = useState<number | null>(null); // Post som ska tas bort
+
+    const openDeleteModal = () => {
+        setPostToDelete(Number(id));
+        setShowDeleteModal(true); // Visa modal när man klickar på radera-knappen
+    };
 
     if (!post) {
         return <p>Inlägget hittades inte.</p>;
@@ -24,10 +34,7 @@ const PostPage = () => {
         }
 
         try {
-            // Anropa deletePost från kontexten för att hantera både API-anrop och listuppdatering
             await deletePost(Number(id));
-
-            alert("Inlägget raderades!");
             navigate("/"); // Navigera tillbaka till startsidan efter radering
         } catch (err: any) {
             setError(err.message);
@@ -60,11 +67,19 @@ const PostPage = () => {
 
             {/* Radera-knapp */}
             <button
-                onClick={handleDelete}
+                onClick={openDeleteModal}
                 style={{ background: "red", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}
             >
                 Radera inlägg
             </button>
+            <Modal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)} // Stäng modal vid stängning
+                onConfirm={handleDelete} // Bekräfta radering
+                title="Bekräfta Radering"
+                message="Vill du verkligen radera detta inlägg?"
+            />
+
         </div>
     );
 };
