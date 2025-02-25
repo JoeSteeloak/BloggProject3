@@ -24,19 +24,8 @@ const PostPage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/blog/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error("Misslyckades med att radera inlägget");
-            }
-
-            // Uppdatera UI genom att ta bort inlägget från context
-            deletePost(Number(id));
+            // Anropa deletePost från kontexten för att hantera både API-anrop och listuppdatering
+            await deletePost(Number(id));
 
             alert("Inlägget raderades!");
             navigate("/"); // Navigera tillbaka till startsidan efter radering
@@ -44,6 +33,12 @@ const PostPage = () => {
             setError(err.message);
         }
     };
+
+    const handleUpdate = () => {
+        // Navigera till uppdateringssidan med postens ID
+        navigate(`/update/${id}`);
+    };
+
 
     return (
         <div>
@@ -55,9 +50,17 @@ const PostPage = () => {
             {/* Visar felmeddelande om något går fel */}
             {error && <p style={{ color: "red" }}>{error}</p>}
 
+            {/* Uppdatera-knapp */}
+            <button
+                onClick={handleUpdate}
+                style={{ background: "orange", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}
+            >
+                Uppdatera inlägg
+            </button>
+
             {/* Radera-knapp */}
-            <button 
-                onClick={handleDelete} 
+            <button
+                onClick={handleDelete}
                 style={{ background: "red", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}
             >
                 Radera inlägg

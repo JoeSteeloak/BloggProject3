@@ -7,7 +7,12 @@ interface BlogContextType {
     deletePost: (id: number) => Promise<void>;
 }
 
-const BlogContext = createContext<BlogContextType | undefined>(undefined);
+const BlogContext = createContext<BlogContextType>({
+    posts: [],
+    fetchPosts: async () => {},
+    deletePost: async () => {},
+});
+
 
 export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -26,23 +31,29 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             const token = localStorage.getItem("access_token");
             if (!token) throw new Error("Ingen JWT-token hittades. Logga in igen.");
-
+    
             const response = await fetch(`http://localhost:3001/blog/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
-
+    
+            const responseData = await response.json(); 
+            console.log("DELETE response:", responseData);
+    
             if (!response.ok) {
-                throw new Error("Misslyckades med att radera inlägget");
+                throw new Error(responseData.message || "Misslyckades med att radera inlägget");
             }
-
-            // Uppdatera state och ta bort det raderade inlägget
+    
+            // Uppdatera den lokala listan i kontexten
             setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-
+    
         } catch (error) {
             console.error("Error deleting blog post:", error);
         }
     };
+    
+    
+    
 
     useEffect(() => {
         fetchPosts();
@@ -55,7 +66,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-export const useBlog = () => {
+export const useBlog = (): BlogContextType => {
     const context = useContext(BlogContext);
     if (!context) {
         throw new Error("useBlog must be used within a BlogProvider");

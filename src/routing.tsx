@@ -6,6 +6,7 @@ import PostPage from "./pages/PostPage";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BlogProvider } from "./context/BlogContext";
+import UpdatePostPage from "./pages/UpdatePostPage";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <BlogProvider><HomePage /></BlogProvider>
+            },
+            {
+                path: "/update/:id", // Ny route för att uppdatera inlägg
+                element: <BlogProvider><UpdatePostPage /></BlogProvider>
             },
             {
                 path: "/post/:id", // Lägg till route för enskilda blogginlägg
