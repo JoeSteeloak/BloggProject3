@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useBlog } from "../context/BlogContext";
 import { useState } from "react";
 import Modal from "../components/Modal"; // Importera Modal-komponenten
-
+import "./AdminPage.css"; // Importera den gemensamma CSS-filen
 
 const PostPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -46,21 +46,21 @@ const PostPage = () => {
         navigate(`/update/${id}`);
     };
 
-
     return (
-        <div>
+        <div className="post-container">
             <h1>{post.title}</h1>
             <p>{post.content}</p>
             <p><strong>Författare:</strong> {post.author}</p>
             <p><small>{new Date(post.publishedAt).toLocaleDateString()}</small></p>
             <p><strong>Kategori:</strong> {post.category}</p>
+            
             {/* Visar felmeddelande om något går fel */}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
             {/* Uppdatera-knapp */}
             <button
                 onClick={handleUpdate}
-                style={{ background: "orange", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}
+                className="update-button"
             >
                 Uppdatera inlägg
             </button>
@@ -68,10 +68,11 @@ const PostPage = () => {
             {/* Radera-knapp */}
             <button
                 onClick={openDeleteModal}
-                style={{ background: "red", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}
+                className="delete-button"
             >
                 Radera inlägg
             </button>
+
             <Modal
                 isOpen={showDeleteModal}
                 onClose={() => setShowDeleteModal(false)} // Stäng modal vid stängning
@@ -79,7 +80,6 @@ const PostPage = () => {
                 title="Bekräfta Radering"
                 message="Vill du verkligen radera detta inlägg?"
             />
-
         </div>
     );
 };

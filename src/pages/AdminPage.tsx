@@ -1,6 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./AdminPage.css"; // Importera CSS-filen
 
 const AdminPage = () => {
     const [title, setTitle] = useState("");
@@ -60,48 +61,50 @@ const AdminPage = () => {
     };
 
     return (
-        <div>
-            <h2>Skapa nytt blogginlägg</h2>
-            <h3>Du är inloggad med mailen: {user?.email}</h3>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>Inlägget skapades!</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Titel:</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Innehåll:</label>
-                    <textarea
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Kategori:</label>
-                    <input
-                        type="text"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Författare:</label>
-                    <input
-                        type="text"
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Skapa inlägg</button>
-            </form>
+        <div className="admin-container">
+            <div className="admin-box">
+                <h2>Skapa nytt blogginlägg</h2>
+                <h3>Du är inloggad med mailen: {user?.email}</h3>
+                {error && <div className="error-message">{error}</div>}
+                {success && <div className="success-message">Inlägget skapades!</div>}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Titel:</label>
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Innehåll:</label>
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Kategori:</label>
+                        <input
+                            type="text"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label>Författare:</label>
+                        <input
+                            type="text"
+                            value={author}
+                            onChange={(e) => setAuthor(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Skapa inlägg</button>
+                </form>
+            </div>
         </div>
     );
 };

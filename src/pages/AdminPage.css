@@ -1,0 +1,132 @@
+/* Centrera admin-formuläret */
+.admin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+/* Stil för admin-formulär */
+.admin-box {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Titelstil */
+.admin-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Inmatningsfält */
+.admin-box input, .admin-box textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Knappstil */
+.admin-box button {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.admin-box button:hover {
+    background-color: #ff9800;
+}
+
+/* Felmeddelande */
+.error-message {
+    background: #ffdddd;
+    color: #d8000c;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Successmeddelande */
+.success-message {
+    background: #ddffdd;
+    color: #2d862d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Responsivt */
+@media (max-width: 600px) {
+    .admin-box {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+/* Gemensam stil för alla sidor */
+.post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.update-button {
+    background-color: orange;
+    color: white;
+}
+
+.update-button:hover {
+    background-color: darkorange;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
+
+/* Modal-stil (kan återanvändas i alla sidor med modal) */
+.modal {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}

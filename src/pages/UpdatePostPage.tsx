@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useBlog } from "../context/BlogContext";
 import { useState, useEffect } from "react";
 import Modal from "../components/Modal"; // Importera Modal-komponenten
+import "./AdminPage.css"; // Importera CSS-filen
 
 const UpdatePostPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,7 +17,6 @@ const UpdatePostPage = () => {
     });
 
     const [showUpdateModal, setShowUpdateModal] = useState(false); // Modal state
-
 
     const post = posts.find((p) => p.id === Number(id));
 
@@ -70,49 +70,51 @@ const UpdatePostPage = () => {
     }
 
     return (
-        <div>
-            <h1>Uppdatera inlägg</h1>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Titel</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={postData.title}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Innehåll</label>
-                    <textarea
-                        name="content"
-                        value={postData.content}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Författare</label>
-                    <input
-                        type="text"
-                        name="author"
-                        value={postData.author}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Kategori</label>
-                    <input
-                        type="text"
-                        name="category"
-                        value={postData.category}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit" style={{ background: "green", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}>
-                    Spara
-                </button>
-            </form>
+        <div className="admin-container">
+            <div className="admin-box">
+                <h2>Uppdatera inlägg</h2>
+                {error && <div className="error-message">{error}</div>}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Titel:</label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={postData.title}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label>Innehåll:</label>
+                        <textarea
+                            name="content"
+                            value={postData.content}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label>Författare:</label>
+                        <input
+                            type="text"
+                            name="author"
+                            value={postData.author}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label>Kategori:</label>
+                        <input
+                            type="text"
+                            name="category"
+                            value={postData.category}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <button type="submit" style={{ background: "green", color: "white", padding: "8px 16px", border: "none", cursor: "pointer" }}>
+                        Spara
+                    </button>
+                </form>
+            </div>
             <Modal
                 isOpen={showUpdateModal}
                 onClose={() => setShowUpdateModal(false)} 
@@ -120,7 +122,6 @@ const UpdatePostPage = () => {
                 title="Uppdatering lyckades"
                 message="Inlägget har uppdaterats!"
             />
-
         </div>
     );
 };

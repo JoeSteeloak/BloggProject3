@@ -1,0 +1,64 @@
+/* HomePage.css */
+.home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-item {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.post-item:hover {
+    transform: scale(1.02);
+}
+
+.post-item a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.post-item h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #ff9800;
+}
+
+.post-item p {
+    color: #555;
+    font-size: 14px;
+}
+
+/* Anpassning för mobil */
+@media (max-width: 600px) {
+    .post-item {
+        padding: 12px;
+    }
+
+    .post-item h2 {
+        font-size: 18px;
+    }
+
+    .post-item p {
+        font-size: 13px;
+    }
+}
