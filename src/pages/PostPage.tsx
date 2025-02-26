@@ -13,12 +13,11 @@ const PostPage = () => {
     const post = posts.find((p) => p.id === Number(id));
 
     const [showDeleteModal, setShowDeleteModal] = useState(false); // Modal state
-    const [postToDelete, setPostToDelete] = useState<number | null>(null); // Post som ska tas bort
-
+    
     const openDeleteModal = () => {
-        setPostToDelete(Number(id));
-        setShowDeleteModal(true); // Visa modal när man klickar på radera-knappen
+        setShowDeleteModal(true); // Visa modal direkt utan att sätta postToDelete
     };
+    
 
     if (!post) {
         return <p>Inlägget hittades inte.</p>;
