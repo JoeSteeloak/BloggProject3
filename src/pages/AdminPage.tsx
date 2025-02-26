@@ -28,7 +28,7 @@ const AdminPage = () => {
                 return;
             }
 
-            const response = await fetch("http://localhost:3000/blog", {
+            const response = await fetch("https://bloggapi-4rn3.onrender.com/blog", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

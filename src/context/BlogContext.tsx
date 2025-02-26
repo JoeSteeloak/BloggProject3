@@ -19,7 +19,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch("http://localhost:3001/blog");
+            const response = await fetch("https://bloggapi-4rn3.onrender.com/blog");
             const data = await response.json();
             setPosts(data);
         } catch (error) {
@@ -32,7 +32,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
             const token = localStorage.getItem("access_token");
             if (!token) throw new Error("Ingen JWT-token hittades. Logga in igen.");
     
-            const response = await fetch(`http://localhost:3001/blog/${id}`, {
+            const response = await fetch(`https://bloggapi-4rn3.onrender.com/blog/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });

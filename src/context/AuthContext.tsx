@@ -18,7 +18,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
 
         try {
 
-            const res = await fetch("http://localhost:3001/auth/login", {
+            const res = await fetch("https://bloggapi-4rn3.onrender.com/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
         }
 
         try {
-            const res = await fetch("http://localhost:3001/auth/validate", {
+            const res = await fetch("https://bloggapi-4rn3.onrender.com/auth/validate", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
