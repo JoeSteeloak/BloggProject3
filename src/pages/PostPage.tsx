@@ -3,12 +3,15 @@ import { useBlog } from "../context/BlogContext";
 import { useState } from "react";
 import Modal from "../components/Modal"; // Importera Modal-komponenten
 import "./AdminPage.css"; // Importera den gemensamma CSS-filen
+import { useAuth } from "../context/AuthContext"; // Importera AuthContext
 
 const PostPage = () => {
     const { id } = useParams<{ id: string }>();
     const { posts, deletePost } = useBlog();
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const { user } = useAuth();
+
 
     const post = posts.find((p) => p.id === Number(id));
 
@@ -57,28 +60,26 @@ const PostPage = () => {
             {error && <p className="error-message">{error}</p>}
 
             {/* Uppdatera-knapp */}
-            <button
-                onClick={handleUpdate}
-                className="update-button"
-            >
-                Uppdatera inlägg
-            </button>
+            {user && (
+    <>
+        <button onClick={handleUpdate} className="update-button">
+            Uppdatera inlägg
+        </button>
 
-            {/* Radera-knapp */}
-            <button
-                onClick={openDeleteModal}
-                className="delete-button"
-            >
-                Radera inlägg
-            </button>
+        <button onClick={openDeleteModal} className="delete-button">
+            Radera inlägg
+        </button>
 
-            <Modal
-                isOpen={showDeleteModal}
-                onClose={() => setShowDeleteModal(false)} // Stäng modal vid stängning
-                onConfirm={handleDelete} // Bekräfta radering
-                title="Bekräfta Radering"
-                message="Vill du verkligen radera detta inlägg?"
-            />
+        <Modal
+            isOpen={showDeleteModal}
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleDelete}
+            title="Bekräfta Radering"
+            message="Vill du verkligen radera detta inlägg?"
+        />
+    </>
+)}
+
         </div>
     );
 };
