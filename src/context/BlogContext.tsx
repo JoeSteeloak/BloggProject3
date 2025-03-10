@@ -3,12 +3,14 @@ import { BlogPost } from "../types/blog.types";
 
 interface BlogContextType {
     posts: BlogPost[];
+    isLoading: boolean;
     fetchPosts: () => Promise<void>;
     deletePost: (id: number) => Promise<void>;
 }
 
 const BlogContext = createContext<BlogContextType>({
     posts: [],
+    isLoading: true,
     fetchPosts: async () => {},
     deletePost: async () => {},
 });
@@ -16,14 +18,19 @@ const BlogContext = createContext<BlogContextType>({
 
 export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);  
+
 
     const fetchPosts = async () => {
+        setIsLoading(true);
         try {
             const response = await fetch("https://bloggapi-4rn3.onrender.com/blog");
             const data = await response.json();
             setPosts(data);
         } catch (error) {
             console.error("Error fetching blog posts:", error);
+        } finally {
+            setIsLoading(false); // 🔹 Oavsett vad, stoppa loading
         }
     };
 
@@ -60,7 +67,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <BlogContext.Provider value={{ posts, fetchPosts, deletePost }}>
+        <BlogContext.Provider value={{ posts, isLoading, fetchPosts, deletePost }}>
             {children}
         </BlogContext.Provider>
     );
