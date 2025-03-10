@@ -10,7 +10,7 @@ const Header = () => {
             <nav>
                 <ul className="nav-links">
                     <li><NavLink to="/">Start</NavLink></li>
-                    <li><NavLink to="/admin">Nytt inlägg</NavLink></li>
+                    {user && <li><NavLink to="/admin">Nytt inlägg</NavLink></li>}
                     <li>
                         {!user ? (
                             <NavLink to="/login">Logga in</NavLink>
